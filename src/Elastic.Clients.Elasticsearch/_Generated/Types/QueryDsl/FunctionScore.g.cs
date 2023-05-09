@@ -49,6 +49,8 @@ public sealed partial class FunctionScore
 	public static FunctionScore RandomScore(Elastic.Clients.Elasticsearch.QueryDsl.RandomScoreFunction randomScoreFunction) => new FunctionScore("random_score", randomScoreFunction);
 	public static FunctionScore ScriptScore(Elastic.Clients.Elasticsearch.QueryDsl.ScriptScoreFunction scriptScoreFunction) => new FunctionScore("script_score", scriptScoreFunction);
 
+	public static FunctionScore ExponentialDate(Elastic.Clients.Elasticsearch.QueryDsl.ExponentialDateFunction exponentialDateFunction) => new FunctionScore("exp", exponentialDateFunction);
+
 	[JsonInclude, JsonPropertyName("filter")]
 	public Elastic.Clients.Elasticsearch.QueryDsl.Query? Filter { get; set; }
 	[JsonInclude, JsonPropertyName("weight")]
@@ -233,6 +235,9 @@ public sealed partial class FunctionScoreDescriptor<TDocument> : SerializableDes
 	public FunctionScoreDescriptor<TDocument> RandomScore(Action<RandomScoreFunctionDescriptor<TDocument>> configure) => Set(configure, "random_score");
 	public FunctionScoreDescriptor<TDocument> ScriptScore(ScriptScoreFunction scriptScoreFunction) => Set(scriptScoreFunction, "script_score");
 	public FunctionScoreDescriptor<TDocument> ScriptScore(Action<ScriptScoreFunctionDescriptor> configure) => Set(configure, "script_score");
+
+	public FunctionScoreDescriptor<TDocument> ExponentialDate(ExponentialDateFunction exponentialDateFunction) => Set(exponentialDateFunction, "exp");
+	public FunctionScoreDescriptor<TDocument> ExponentialDate(Action<ExponentialDateFunctionDescriptor> configure) => Set(configure, "exp");
 
 	protected override void Serialize(Utf8JsonWriter writer, JsonSerializerOptions options, IElasticsearchClientSettings settings)
 	{
